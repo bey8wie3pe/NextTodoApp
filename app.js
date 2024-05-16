@@ -11,36 +11,6 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 const session = require('express-session');
 
-const { Client, Intents } = require('discord.js');
-
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-const TOKEN = process.env.DISCORD_TOKEN;
-
-client.once('ready', () => {
-    console.log('Bot is ready!');
-});
-
-app.get('/send-message', async (req, res) => {
-    try {
-        // メッセージを送信したいチャンネルのID
-        const channelId = process.env.DISCORD_CHANNEL_ID;
-
-        // メッセージを送信したいチャンネルのオブジェクトを取得
-        const channel = await client.channels.fetch(channelId);
-
-        // メッセージを送信
-        await channel.send('タバコ買ってきてください');
-
-        // レスポンスを返す
-        res.status(200).json({ message: 'メッセージが送信されました。' });
-    } catch (error) {
-        console.error('メッセージの送信中にエラーが発生しました:', error);
-        res.status(500).json({ error: 'メッセージの送信中にエラーが発生しました。' });
-    }
-});
-
-// Discordに接続
-client.login(TOKEN);
 
 
 const fs = require('fs');
